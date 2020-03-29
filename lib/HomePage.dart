@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
     return AppBar(
       backgroundColor: const Color(0xFF262626),
       centerTitle: true,
-      title: Text('GET FIT',
+      title: Text('G E T   F I T',
         style: TextStyle(
           color: Theme.of(context).accentColor,
         ),

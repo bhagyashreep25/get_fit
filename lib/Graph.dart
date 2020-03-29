@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:intl/intl.dart';
-// import 'package:charts_common'
 
 class Graph extends StatefulWidget {
-  Map<DateTime,int> stepCountMap;
+  final Map<DateTime,int> stepCountMap;
 
   Graph({Key key, this.stepCountMap}): super(key: key);
 
@@ -24,7 +23,10 @@ class _GraphState extends State<Graph> {
       widget.stepCountMap.forEach((k,v) {
         print(now.difference(k).inDays);
       if(now.difference(k).inDays<=6){
-        data.add(new GraphClass(DateFormat('hh:mm').format(k).toString(), v, 
+        data.add(new GraphClass(
+          DateFormat('E').format(k).toString(), 
+          // k.weekday.toString(),
+          v, 
         // charts.ColorUtil.fromDartColor(Colors.cyan)
         charts.ColorUtil.fromDartColor(Color(0xFF93F4FE)) //accent color
         ));
@@ -37,7 +39,7 @@ class _GraphState extends State<Graph> {
       charts.ColorUtil.fromDartColor(Color(0xFF93F4FE)) //accent color
       )));
     }
-    // _addPref(data);
+    
     series = [new charts.Series(
       id: 'graph',
       domainFn: (GraphClass data, _) => data.date,
@@ -62,7 +64,7 @@ class _GraphState extends State<Graph> {
       domainAxis: new charts.OrdinalAxisSpec(
         renderSpec: new charts.SmallTickRendererSpec(
           labelStyle: new charts.TextStyleSpec(
-            fontSize: 13,
+            fontSize: 10,
             color: charts.MaterialPalette.white
           ),
           lineStyle: new charts.LineStyleSpec(
@@ -74,7 +76,7 @@ class _GraphState extends State<Graph> {
         tickProviderSpec: new charts.BasicNumericTickProviderSpec(desiredTickCount: 10),
         renderSpec: charts.GridlineRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            fontSize: 13,
+            fontSize: 10,
             color: charts.MaterialPalette.white
           ),
           lineStyle: charts.LineStyleSpec(
@@ -109,8 +111,12 @@ class _GraphState extends State<Graph> {
           child: Column(
             children: <Widget>[
               Text(
-                "Weekly Goal Achievement",
+                "Weekly Steps Overview",
                 // style: Theme.of(context).textTheme.body1,
+                style: TextStyle(
+                  color: Theme.of(context).accentColor, 
+                  fontSize: 12
+                ),
               ),
               Expanded(
                 child: chart,

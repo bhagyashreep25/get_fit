@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_fit/Graph.dart';
+import 'package:get_fit/PieChart.dart';
 
 class PedometerPage extends StatefulWidget {
   final Map<DateTime,int> stepCountMap;
-  PedometerPage({Key key, this.stepCountMap}): super(key: key);
+  final String goal;
+  PedometerPage({Key key, this.stepCountMap, this.goal}): super(key: key);
 
   static final routeName = '/ped';
   @override
@@ -12,12 +14,9 @@ class PedometerPage extends StatefulWidget {
 }
 
 class _PedometerPageState extends State<PedometerPage> {
-  TextEditingController t;
   @override
   void initState() {
-    super.initState();
-    t = TextEditingController();
-    
+    super.initState();    
   }
 
   @override
@@ -31,6 +30,7 @@ class _PedometerPageState extends State<PedometerPage> {
       body: Column(
         children: <Widget>[
           Graph(stepCountMap: widget.stepCountMap),
+          PieChart(stepCountMap: widget.stepCountMap, goal: widget.goal)
         ],),
 
     );
@@ -40,7 +40,7 @@ class _PedometerPageState extends State<PedometerPage> {
     return AppBar(
       backgroundColor: const Color(0xFF262626),
       centerTitle: true,
-      title: Text('GET FIT',
+      title: Text('G E T   F I T',
             style: TextStyle(
               color: Theme.of(context).accentColor,
             ),

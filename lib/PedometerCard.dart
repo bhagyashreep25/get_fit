@@ -312,7 +312,7 @@ class _PedometerCardState extends State<PedometerCard> {
       ),
     ),
     onTap: () async {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => PedometerPage(stepCountMap: _stepCountMap)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => PedometerPage(stepCountMap: _stepCountMap, goal: _goal,)));
       },
     );
   }
