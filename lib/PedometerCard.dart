@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:pedometer/pedometer.dart';
 import 'package:get_fit/PedometerPage.dart';
@@ -20,6 +21,7 @@ class _PedometerCardState extends State<PedometerCard> {
   String _stepCountValue = "0";
   String _goal;
   TextEditingController t;
+  final _formKey = GlobalKey<FormState>();
   String _calories = "0";
   String _distance = "0";
 
@@ -106,7 +108,8 @@ class _PedometerCardState extends State<PedometerCard> {
 
   void _onReset() {
     DateTime now = DateTime.now();
-    if(now.hour==0 && now.minute==0){ 
+    // if(now.hour==0 && now.minute==0){ 
+      if(DateFormat('hh:mm').format(now)=='00:00'){
       print(_stepCountMap);
       if(_stepCountMap.isEmpty){
         setState(() {
@@ -220,7 +223,7 @@ class _PedometerCardState extends State<PedometerCard> {
                   ),
                   padding: EdgeInsets.symmetric(vertical: 15),
                 ),
-                percent: int.parse(_stepCountValue)/int.parse(_goal),
+                percent: (int.parse(_stepCountValue)/int.parse(_goal)>=1.0) ? 1.0 : int.parse(_stepCountValue)/int.parse(_goal),
                 // percent: 0.5,
                 circularStrokeCap: CircularStrokeCap.round,
                 progressColor: Theme.of(context).accentColor,
@@ -326,12 +329,24 @@ class _PedometerCardState extends State<PedometerCard> {
           color: Theme.of(context).accentColor
         ),
       ),
-      content: TextFormField(
-        decoration: InputDecoration(
-          hintText: 'Goal Steps',
+      content: Form(
+        key: _formKey,
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: 'Goal Steps',
+          ),
+          controller: t,
+          keyboardType: TextInputType.number,
+          validator: (value){
+            if(value.isEmpty) {
+              return 'Please enter a number';
+            }
+            if(int.parse(value)==0){
+              return 'Goal steps cannot be 0';
+            }
+            return null;
+          },
         ),
-        controller: t,
-        keyboardType: TextInputType.number,
       ),
       actions: <Widget>[
         FlatButton(
@@ -341,19 +356,23 @@ class _PedometerCardState extends State<PedometerCard> {
             ),
           ),
           onPressed: (){
-            setState(() {
-              t.text = _goal;
-            });
-            Navigator.of(context).pop();
+            // if(_formKey.currentState.validate()){
+              setState(() {
+                t.text = _goal;
+              });
+              Navigator.of(context).pop();
+            // }
           },),
         FlatButton(
           child: Text("OK"),
           onPressed: () {
-            setState(() {
-              _goal = t.text;
-            });
-            print(_goal);
-            Navigator.of(context).pop();
+            if(_formKey.currentState.validate()){
+              setState(() {
+                _goal = t.text;
+              });
+              print(_goal);
+              Navigator.of(context).pop();
+              }
           },
         )
       ],

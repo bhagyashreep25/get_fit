@@ -34,7 +34,7 @@ class _GraphState extends State<Graph> {
     });
     }
     else{
-      widget.stepCountMap.forEach((k,v) => data.add(new GraphClass(DateFormat('hh:mm').format(k).toString(), v, 
+      widget.stepCountMap.forEach((k,v) => data.add(new GraphClass(DateFormat('E').format(k).toString(), v, 
       // charts.ColorUtil.fromDartColor(Colors.cyan)
       charts.ColorUtil.fromDartColor(Color(0xFF93F4FE)) //accent color
       )));

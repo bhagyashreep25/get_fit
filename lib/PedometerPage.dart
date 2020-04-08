@@ -29,8 +29,13 @@ class _PedometerPageState extends State<PedometerPage> {
       backgroundColor: const Color(0xFF343434),
       body: Column(
         children: <Widget>[
-          Graph(stepCountMap: widget.stepCountMap),
-          PieChart(stepCountMap: widget.stepCountMap, goal: widget.goal)
+          widget.stepCountMap.isNotEmpty ? 
+          Graph(stepCountMap: widget.stepCountMap): Container(
+            child: Text('Wait a day for stats to show up'),
+            padding: EdgeInsets.only(top: 10),
+            ),
+          widget.stepCountMap.isNotEmpty ? 
+          PieChart(stepCountMap: widget.stepCountMap, goal: widget.goal) : Container()
         ],),
 
     );
