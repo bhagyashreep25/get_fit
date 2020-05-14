@@ -27,15 +27,19 @@ class _PedometerPageState extends State<PedometerPage> {
       // backgroundColor: Colors.white,
       // backgroundColor: const Color(0xFF4C4C4C),
       backgroundColor: const Color(0xFF343434),
-      body: Column(
+      body: 
+      // Column(
+      ListView(
         children: <Widget>[
-          widget.stepCountMap.isNotEmpty ? 
-          Graph(stepCountMap: widget.stepCountMap): Container(
-            child: Text('Wait a day for stats to show up'),
-            padding: EdgeInsets.only(top: 10),
-            ),
-          widget.stepCountMap.isNotEmpty ? 
-          PieChart(stepCountMap: widget.stepCountMap, goal: widget.goal) : Container()
+          // widget.stepCountMap.isNotEmpty ? 
+          Graph(stepCountMap: widget.stepCountMap),
+          // : Container(
+          //   child: Text('Wait a day for stats to show up'),
+          //   padding: EdgeInsets.only(top: 10),
+          //   ),
+          // widget.stepCountMap.isNotEmpty ? 
+          PieChart(stepCountMap: widget.stepCountMap, goal: widget.goal) 
+          // : Container()
         ],),
 
     );

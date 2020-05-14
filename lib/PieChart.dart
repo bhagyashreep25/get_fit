@@ -67,7 +67,7 @@ class _PieChartState extends State<PieChart> {
       measureFn: (PieElement data, _) => data.count,
       colorFn: (PieElement data, _) => data.color,
       data: data,
-      labelAccessorFn: (PieElement data, _) => '${data.legend} on ${data.count} days',
+      labelAccessorFn: (PieElement data, _) => '${data.count} days',
     )];
   }
 
@@ -82,7 +82,7 @@ class _PieChartState extends State<PieChart> {
           new charts.ArcLabelDecorator(
             labelPosition: charts.ArcLabelPosition.outside,
             outsideLabelStyleSpec: charts.TextStyleSpec(
-            fontSize: 7,
+            fontSize: 10,
             color: charts.MaterialPalette.white
           ),
           )
@@ -92,7 +92,7 @@ class _PieChartState extends State<PieChart> {
 
     return Container(
       height: 200,
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.symmetric(vertical: 5),
       child: Card(
         elevation: 10.0,
         color: const Color(0xFF4C4C4C),
@@ -108,6 +108,47 @@ class _PieChartState extends State<PieChart> {
             ),
             // Row(
             //   children: <Widget>[
+            // Column(children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 15),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  ConstrainedBox(
+                    constraints: new BoxConstraints(
+                      minHeight: 15.0,
+                      minWidth: 15.0,
+                      maxHeight: 15.0,
+                      maxWidth: 15.0,
+                    ),
+                    child: new DecoratedBox(
+                      decoration: new BoxDecoration(color: Theme.of(context).accentColor),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 10),),
+                  Text('-   Achieved',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 10),),
+                  ConstrainedBox(
+                    constraints: new BoxConstraints(
+                      minHeight: 15.0,
+                      minWidth: 15.0,
+                      maxHeight: 15.0,
+                      maxWidth: 15.0,
+                    ),
+                    child: new DecoratedBox(
+                      decoration: new BoxDecoration(color: Color(0xFF343434))
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 10),),
+                  Text('-   Not Achieved',
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                  ),
+                  Padding(padding: EdgeInsets.only(right: 10, bottom: 10),),
+                ],
+              ),
+              
+            // ],),
                 Expanded(child: chart,),
                 
               // ],
