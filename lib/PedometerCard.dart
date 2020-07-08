@@ -17,7 +17,6 @@ class _PedometerCardState extends State<PedometerCard> {
   Pedometer _pedometer;
   StreamSubscription<int> _subscription;
   Map<DateTime,int> _stepCountMap;
-  Map<DateTime,int> _newMap;
   // String _stepCountValue = 'unknown';
   String _stepCountValue = "0";
   String _goal;
@@ -38,17 +37,9 @@ class _PedometerCardState extends State<PedometerCard> {
     _stepCountMap = new Map<DateTime,int>();
     t = TextEditingController();
     t.text = _goal;
-    _newMap = new Map<DateTime,int>();
-    _newMap[DateTime.parse('2020-04-12 00:00:00.000')] = 354;
-    _newMap[DateTime.parse('2020-04-13 00:00:00.000')] = 201;
-    _newMap[DateTime.parse('2020-04-14 00:00:00.000')] = 277;
-    _newMap[DateTime.parse('2020-04-15 00:00:00.000')] = 311;
-    _newMap[DateTime.parse('2020-04-16 00:00:00.000')] = 189;
-    _newMap[DateTime.parse('2020-04-17 00:00:00.000')] = 239;
-    _newMap[DateTime.parse('2020-04-18 00:00:00.000')] = 327;
     initPlatformState();
     var cron = new Cron();
-    cron.schedule(new Schedule.parse('*/1 * * * *'), () async {
+    cron.schedule(new Schedule.parse('0 0 * * *'), () async {
       _onReset();
     });
   }
@@ -117,8 +108,6 @@ class _PedometerCardState extends State<PedometerCard> {
 
   void _onReset() {
     DateTime now = DateTime.now();
-    if(now.hour==00 && now.minute==00){ 
-      // if(DateFormat('hh:mm').format(now)=='00:00'){
       print(_stepCountMap);
       if(_stepCountMap.isEmpty){
         setState(() {
@@ -149,7 +138,7 @@ class _PedometerCardState extends State<PedometerCard> {
       }
       print(_stepCountMap);
       print(_stepCountValue);
-    }
+    // }
   }
 
   //function to determine the distance run in kilometers using number of steps
@@ -325,8 +314,7 @@ class _PedometerCardState extends State<PedometerCard> {
     ),
     onTap: () async {
       Navigator.push(context, MaterialPageRoute(builder: (context) => PedometerPage(
-        stepCountMap: _stepCountMap, 
-        // stepCountMap: _newMap,
+        stepCountMap: _stepCountMap,
         goal: _goal,)));
       },
     );
